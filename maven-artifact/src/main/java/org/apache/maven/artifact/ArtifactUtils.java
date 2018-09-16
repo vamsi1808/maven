@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
-import org.apache.commons.lang3.Validate;
 import org.apache.maven.artifact.versioning.VersionRange;
 
 /**
@@ -54,7 +53,14 @@ public final class ArtifactUtils
 
     public static String toSnapshotVersion( String version )
     {
-        Validate.notBlank( version, "version can neither be null, empty nor blank" );
+        if ( version == null )
+        {
+            throw new NullPointerException( "version can neither be null, empty nor blank" );
+        }
+        if ( version.length() == 0 || version.trim().length() == 0 )
+        {
+            throw new IllegalArgumentException( "version can neither be null, empty nor blank" );
+        }
 
         Matcher m = Artifact.VERSION_FILE_PATTERN.matcher( version );
         if ( m.matches() )
@@ -74,8 +80,23 @@ public final class ArtifactUtils
 
     public static String versionlessKey( String groupId, String artifactId )
     {
-        Validate.notBlank( groupId, "groupId can neither be null, empty nor blank" );
-        Validate.notBlank( artifactId, "artifactId can neither be null, empty nor blank" );
+        if ( groupId == null )
+        {
+            throw new NullPointerException( "groupId can neither be null, empty nor blank" );
+        }
+        if ( groupId.length() == 0 || groupId.trim().length() == 0 )
+        {
+            throw new IllegalArgumentException( "groupId can neither be null, empty nor blank" );
+        }
+
+        if ( artifactId == null )
+        {
+            throw new NullPointerException( "artifactId can neither be null, empty nor blank" );
+        }
+        if ( artifactId.length() == 0 || artifactId.trim().length() == 0 )
+        {
+            throw new IllegalArgumentException( "artifactId can neither be null, empty nor blank" );
+        }
 
         return groupId + ":" + artifactId;
     }
@@ -87,9 +108,32 @@ public final class ArtifactUtils
 
     public static String key( String groupId, String artifactId, String version )
     {
-        Validate.notBlank( groupId, "groupId can neither be null, empty nor blank" );
-        Validate.notBlank( artifactId, "artifactId can neither be null, empty nor blank" );
-        Validate.notBlank( version, "version can neither be null, empty nor blank" );
+        if ( groupId == null )
+        {
+            throw new NullPointerException( "groupId can neither be null, empty nor blank" );
+        }
+        if ( groupId.length() == 0 || groupId.trim().length() == 0 )
+        {
+            throw new IllegalArgumentException( "groupId can neither be null, empty nor blank" );
+        }
+
+        if ( artifactId == null )
+        {
+            throw new NullPointerException( "artifactId can neither be null, empty nor blank" );
+        }
+        if ( artifactId.length() == 0 || artifactId.trim().length() == 0 )
+        {
+            throw new IllegalArgumentException( "artifactId can neither be null, empty nor blank" );
+        }
+
+        if ( version == null )
+        {
+            throw new NullPointerException( "version can neither be null, empty nor blank" );
+        }
+        if ( version.length() == 0 || version.trim().length() == 0 )
+        {
+            throw new IllegalArgumentException( "version can neither be null, empty nor blank" );
+        }
 
         return groupId + ":" + artifactId + ":" + version;
     }
